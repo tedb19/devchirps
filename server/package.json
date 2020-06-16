@@ -5,16 +5,23 @@
   "author": "Teddy Odhiambo <tedb19@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@apollo/federation": "^0.16.6",
+    "@apollo/gateway": "^0.16.6",
+    "apollo-server": "^2.14.4",
     "apollo-server-express": "^2.14.1",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "graphql": "^15.0.0"
+    "graphql": "^15.0.0",
+    "wait-on": "^5.0.1"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "dev": "nodemon -r dotenv/config -r esm ./src/index.js"
+    "dev": "concurrently -k yarn:dev:*",
+    "dev:accounts": "nodemon -r dotenv/config -r esm ./src/services/accounts/index.js",
+    "dev:gateway": "wait-on tcp:4001 && nodemon -r dotenv/config -r esm ./src/index.js"
   }
 }
